@@ -137,18 +137,27 @@ window.addEventListener('scroll', () => {
 const darkModeToggle = document.getElementById('darkModeToggle');
 const body = document.body;
 
-// Dark mode is the default - no persistence
-// Users can toggle to light mode but it won't be saved
+// Check for saved theme preference (only for this user's browser)
+const currentTheme = localStorage.getItem('theme');
+if (currentTheme === 'light') {
+    body.classList.add('light-mode');
+    if (darkModeToggle) {
+        darkModeToggle.innerHTML = '<i class=\"fas fa-sun\"></i>';
+    }
+}
+// If no preference saved, default to dark mode (nothing to do)
 
 if (darkModeToggle) {
     darkModeToggle.addEventListener('click', () => {
         body.classList.toggle('light-mode');
         
-        // Update icon only (no localStorage)
+        // Update icon and save preference
         if (body.classList.contains('light-mode')) {
             darkModeToggle.innerHTML = '<i class=\"fas fa-sun\"></i>';
+            localStorage.setItem('theme', 'light');
         } else {
             darkModeToggle.innerHTML = '<i class=\"fas fa-moon\"></i>';
+            localStorage.setItem('theme', 'dark');
         }
     });
 }
