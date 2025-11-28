@@ -55,18 +55,37 @@ window.addEventListener('scroll', () => {
 const contactForm = document.querySelector('.contact-form');
 
 if (contactForm) {
-    contactForm.addEventListener('submit', (e) => {
+    contactForm.addEventListener('submit', async (e) => {
         e.preventDefault();
         
-        // Get form values
-        const formData = new FormData(contactForm);
+        const submitButton = contactForm.querySelector('button[type="submit"]');
+        const originalText = submitButton.textContent;
         
-        // Here you would typically send the data to a server
-        // For now, we'll just show an alert
-        alert('Thank you for your message! I will get back to you soon.');
+        // Show loading state
+        submitButton.textContent = 'Sending...';
+        submitButton.disabled = true;
         
-        // Reset the form
-        contactForm.reset();
+        try {
+            const formData = new FormData(contactForm);
+            const response = await fetch('https://api.web3forms.com/submit', {
+                method: 'POST',
+                body: formData
+            });
+            
+            const data = await response.json();
+            
+            if (data.success) {
+                alert('Thank you for your message! I will get back to you soon.');
+                contactForm.reset();
+            } else {
+                alert('Oops! Something went wrong. Please try again or email me directly.');
+            }
+        } catch (error) {
+            alert('Oops! Something went wrong. Please try again or email me directly.');
+        } finally {
+            submitButton.textContent = originalText;
+            submitButton.disabled = false;
+        }
     });
 }
 

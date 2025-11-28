@@ -206,11 +206,15 @@
                         <a href="#"><i class="fab fa-medium"></i></a>
                     </div>
                 </div>
-                <form class="contact-form">
-                    <input type="text" placeholder="Your Name" required>
-                    <input type="email" placeholder="Your Email" required>
-                    <input type="text" placeholder="Subject" required>
-                    <textarea rows="5" placeholder="Your Message" required></textarea>
+                <form class="contact-form" action="https://api.web3forms.com/submit" method="POST">
+                    <input type="hidden" name="access_key" value="57381e04-4646-481e-9127-4a3db1ce4c3a">
+                    <input type="hidden" name="subject" value="New Contact from Portfolio">
+                    <input type="hidden" name="from_name" value="Portfolio Contact Form">
+                    
+                    <input type="text" name="name" placeholder="Your Name" required>
+                    <input type="email" name="email" placeholder="Your Email" required>
+                    <input type="text" name="subject_line" placeholder="Subject" required>
+                    <textarea name="message" rows="5" placeholder="Your Message" required></textarea>
                     <button type="submit" class="btn btn-primary">Send Message</button>
                 </form>
             </div>
