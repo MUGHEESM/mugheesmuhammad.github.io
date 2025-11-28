@@ -115,9 +115,59 @@ document.querySelectorAll('section').forEach(section => {
 // Navbar background on scroll
 window.addEventListener('scroll', () => {
     const navbar = document.querySelector('.navbar');
+    const backToTop = document.getElementById('backToTop');
+    
     if (window.scrollY > 100) {
         navbar.style.backgroundColor = 'rgba(10, 25, 47, 0.98)';
     } else {
         navbar.style.backgroundColor = 'rgba(10, 25, 47, 0.95)';
     }
+    
+    // Show/hide back to top button
+    if (backToTop) {
+        if (window.scrollY > 300) {
+            backToTop.classList.add('visible');
+        } else {
+            backToTop.classList.remove('visible');
+        }
+    }
 });
+
+// Dark Mode Toggle
+const darkModeToggle = document.getElementById('darkModeToggle');
+const body = document.body;
+
+// Check for saved theme preference
+const currentTheme = localStorage.getItem('theme');
+if (currentTheme === 'light') {
+    body.classList.add('light-mode');
+    if (darkModeToggle) {
+        darkModeToggle.innerHTML = '<i class=\"fas fa-sun\"></i>';
+    }
+}
+
+if (darkModeToggle) {
+    darkModeToggle.addEventListener('click', () => {
+        body.classList.toggle('light-mode');
+        
+        // Update icon
+        if (body.classList.contains('light-mode')) {
+            darkModeToggle.innerHTML = '<i class=\"fas fa-sun\"></i>';
+            localStorage.setItem('theme', 'light');
+        } else {
+            darkModeToggle.innerHTML = '<i class=\"fas fa-moon\"></i>';
+            localStorage.setItem('theme', 'dark');
+        }
+    });
+}
+
+// Back to Top Button
+const backToTop = document.getElementById('backToTop');
+if (backToTop) {
+    backToTop.addEventListener('click', () => {
+        window.scrollTo({
+            top: 0,
+            behavior: 'smooth'
+        });
+    });
+}

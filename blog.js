@@ -65,12 +65,15 @@ function displayPosts(filter = 'all') {
             ? `<a href="${post.externalLink}" class="btn btn-secondary">Read Full Walkthrough</a>`
             : `<button class="btn btn-secondary" onclick="readPost(${post.id})">Read More</button>`;
         
+        const readingTime = calculateReadingTime(post.content);
+        
         card.innerHTML = `
             <img src="${post.image || 'https://via.placeholder.com/800x400/0a192f/00ff88?text=Blog+Post'}" alt="${post.title}" class="blog-image">
             <div class="blog-content">
                 <div class="blog-meta">
                     <span class="blog-category">${formatCategory(post.category)}</span>
                     <span class="blog-date">${formatDate(post.date)}</span>
+                    <span class="reading-time"><i class="fas fa-clock"></i> ${readingTime}</span>
                 </div>
                 <h3>${post.title}</h3>
                 <p class="blog-excerpt">${post.excerpt}</p>
@@ -99,6 +102,15 @@ function formatDate(dateString) {
         month: 'long', 
         day: 'numeric' 
     });
+}
+
+// Calculate reading time
+function calculateReadingTime(content) {
+    const wordsPerMinute = 200;
+    const text = content.replace(/<[^>]*>/g, ''); // Remove HTML tags
+    const wordCount = text.split(/\s+/).length;
+    const readingTime = Math.ceil(wordCount / wordsPerMinute);
+    return `${readingTime} min read`;
 }
 
 // Filter functionality
@@ -180,11 +192,22 @@ function readPost(id) {
     if (!post) return;
 
     const postContent = document.getElementById('postContent');
+    const currentUrl = encodeURIComponent(window.location.href);
+    const postTitle = encodeURIComponent(post.title);
+    
     postContent.innerHTML = `
         <h2>${post.title}</h2>
         <div class="post-meta">
             <span class="blog-category">${formatCategory(post.category)}</span>
             <span class="blog-date">${formatDate(post.date)}</span>
+            <span class="reading-time"><i class="fas fa-clock"></i> ${calculateReadingTime(post.content)}</span>
+        </div>
+        <div class="share-buttons">
+            <span>Share:</span>
+            <a href="https://twitter.com/intent/tweet?text=${postTitle}&url=${currentUrl}" target="_blank" title="Share on Twitter"><i class="fab fa-twitter"></i></a>
+            <a href="https://www.linkedin.com/sharing/share-offsite/?url=${currentUrl}" target="_blank" title="Share on LinkedIn"><i class="fab fa-linkedin"></i></a>
+            <a href="https://www.facebook.com/sharer/sharer.php?u=${currentUrl}" target="_blank" title="Share on Facebook"><i class="fab fa-facebook"></i></a>
+            <a href="mailto:?subject=${postTitle}&body=Check out this post: ${currentUrl}" title="Share via Email"><i class="fas fa-envelope"></i></a>
         </div>
         <img src="${post.image}" alt="${post.title}" style="width: 100%; border-radius: 10px; margin-bottom: 2rem;">
         <div class="post-body">
