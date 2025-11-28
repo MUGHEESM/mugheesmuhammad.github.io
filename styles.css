@@ -886,24 +886,6 @@ body.light-mode .dark-mode-toggle:hover {
     box-shadow: 0 6px 20px rgba(100, 255, 218, 0.5);
 }
 
-/* Visitor Counter */
-.visitor-counter {
-    position: fixed;
-    bottom: 150px;
-    right: 30px;
-    background-color: var(--bg-light);
-    padding: 10px 15px;
-    border-radius: 25px;
-    box-shadow: 0 4px 15px rgba(0, 255, 136, 0.2);
-    z-index: 999;
-    border: 2px solid var(--primary-color);
-}
-
-.visitor-counter img {
-    display: block;
-    max-width: 100px;
-}
-
 /* Light Mode Styles */
 body.light-mode {
     --primary-color: #00cc6f;
