@@ -798,14 +798,14 @@ footer {
     position: fixed;
     bottom: 30px;
     right: 30px;
-    width: 50px;
-    height: 50px;
+    width: 60px;
+    height: 60px;
     border-radius: 50%;
     background-color: var(--primary-color);
     color: var(--bg-dark);
     border: none;
     cursor: pointer;
-    font-size: 1.2rem;
+    font-size: 1.5rem;
     box-shadow: 0 4px 15px rgba(0, 255, 136, 0.3);
     transition: all 0.3s ease;
     z-index: 999;
@@ -814,9 +814,43 @@ footer {
     justify-content: center;
 }
 
+.dark-mode-toggle::before {
+    content: 'Dark Mode';
+    position: absolute;
+    right: 70px;
+    background-color: var(--bg-light);
+    color: var(--heading-color);
+    padding: 8px 12px;
+    border-radius: 5px;
+    font-size: 0.85rem;
+    white-space: nowrap;
+    opacity: 0;
+    pointer-events: none;
+    transition: opacity 0.3s ease;
+    font-weight: 600;
+    border: 2px solid var(--primary-color);
+}
+
+body.light-mode .dark-mode-toggle::before {
+    content: 'Light Mode';
+}
+
+.dark-mode-toggle:hover::before {
+    opacity: 1;
+}
+
 .dark-mode-toggle:hover {
-    transform: scale(1.1);
+    transform: scale(1.1) rotate(15deg);
     box-shadow: 0 6px 20px rgba(0, 255, 136, 0.5);
+}
+
+body.light-mode .dark-mode-toggle {
+    background-color: #ffd700;
+    box-shadow: 0 4px 15px rgba(255, 215, 0, 0.3);
+}
+
+body.light-mode .dark-mode-toggle:hover {
+    box-shadow: 0 6px 20px rgba(255, 215, 0, 0.5);
 }
 
 /* Back to Top Button */
